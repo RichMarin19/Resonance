@@ -12,6 +12,8 @@ struct MainDashboard: View {
     @State private var showingCustomActivitySheet = false
     @State private var customActivityName = ""
     @State private var showingInsights = false
+    @State private var showingFeedback = false
+    @State private var showingBetaWelcome = false
     
     init(learningStyle: LearningStyle, moodProfile: MoodProfile? = nil) {
         self.learningStyle = learningStyle
@@ -58,6 +60,29 @@ struct MainDashboard: View {
             .navigationTitle("Resonance")
             .navigationBarTitleDisplayMode(.large)
             .toolbar {
+                ToolbarItem(placement: .navigationBarLeading) {
+                    HStack(spacing: 8) {
+                        Text("BETA")
+                            .font(.caption)
+                            .fontWeight(.bold)
+                            .foregroundColor(.white)
+                            .padding(.horizontal, 8)
+                            .padding(.vertical, 4)
+                            .background(
+                                LinearGradient(colors: [.purple, .blue], 
+                                             startPoint: .leading, 
+                                             endPoint: .trailing)
+                            )
+                            .cornerRadius(8)
+                        
+                        Button(action: { showingFeedback = true }) {
+                            Image(systemName: "bubble.left.and.bubble.right.fill")
+                                .font(.title3)
+                                .foregroundColor(.blue)
+                        }
+                    }
+                }
+                
                 ToolbarItem(placement: .navigationBarTrailing) {
                     Button(action: refreshAllData) {
                         Image(systemName: isRefreshing ? "arrow.clockwise.circle.fill" : "arrow.clockwise.circle")
@@ -68,9 +93,6 @@ struct MainDashboard: View {
                     }
                 }
             }
-        }
-        .onAppear {
-            refreshAllData()
         }
         .sheet(isPresented: $showingActivityTracker) {
             if let activity = selectedActivity {
@@ -98,6 +120,20 @@ struct MainDashboard: View {
                 healthKit: healthKit,
                 moodProfile: moodProfile
             )
+        }
+        .sheet(isPresented: $showingFeedback) {
+            FeedbackView()
+        }
+        .sheet(isPresented: $showingBetaWelcome) {
+            BetaWelcomeView(isPresented: $showingBetaWelcome)
+        }
+        .onAppear {
+            refreshAllData()
+            // Show beta welcome on first launch
+            if !UserDefaults.standard.bool(forKey: "HasSeenBetaWelcome") {
+                showingBetaWelcome = true
+                UserDefaults.standard.set(true, forKey: "HasSeenBetaWelcome")
+            }
         }
     }
     
@@ -229,7 +265,7 @@ struct TodaySummaryCard: View {
                         icon: "face.smiling",
                         value: todaysMood != nil ? String(format: "%.1f", todaysMood!) : "--",
                         label: "Mood",
-                        color: todaysMood != nil ? Color(hue: 0.3 * (todaysMood! / 10.0), saturation: 0.5, brightness: 0.9) : .gray
+                        color: todaysMood != nil ? Color.init(hue: 0.3 * (todaysMood! / 10.0), saturation: 0.5, brightness: 0.9) : .gray
                     )
                     CompactMetricCard(
                         icon: "moon.fill",
@@ -640,7 +676,7 @@ struct MiniDayBar: View {
             RoundedRectangle(cornerRadius: 4)
                 .fill(
                     value != nil 
-                    ? Color(hue: 0.3 * (value! / 10.0), saturation: 0.5, brightness: 0.9)
+                    ? Color.init(hue: 0.3 * (value! / 10.0), saturation: 0.5, brightness: 0.9)
                     : Color(.systemGray5)
                 )
                 .frame(height: value != nil ? CGFloat(value! * 4) : 2)

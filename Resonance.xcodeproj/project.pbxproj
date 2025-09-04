@@ -24,6 +24,8 @@
 		A1B2C3D29 /* ActivityModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1B2C3D30 /* ActivityModels.swift */; };
 		A1B2C3D31 /* ActivityTrackingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1B2C3D32 /* ActivityTrackingView.swift */; };
 		A1B2C3D33 /* SummaryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1B2C3D34 /* SummaryView.swift */; };
+		A1B2C3D37 /* FeedbackView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1B2C3D38 /* FeedbackView.swift */; };
+		A1B2C3D39 /* BetaWelcomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1B2C3D40 /* BetaWelcomeView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -45,6 +47,8 @@
 		A1B2C3D30 /* ActivityModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityModels.swift; sourceTree = "<group>"; };
 		A1B2C3D32 /* ActivityTrackingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityTrackingView.swift; sourceTree = "<group>"; };
 		A1B2C3D34 /* SummaryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SummaryView.swift; sourceTree = "<group>"; };
+		A1B2C3D38 /* FeedbackView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedbackView.swift; sourceTree = "<group>"; };
+		A1B2C3D40 /* BetaWelcomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BetaWelcomeView.swift; sourceTree = "<group>"; };
 		A1B2C3D35 /* Resonance.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Resonance.entitlements; sourceTree = "<group>"; };
 		A1B2C3D36 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -96,6 +100,8 @@
 				A1B2C3D30 /* ActivityModels.swift */,
 				A1B2C3D32 /* ActivityTrackingView.swift */,
 				A1B2C3D34 /* SummaryView.swift */,
+				A1B2C3D38 /* FeedbackView.swift */,
+				A1B2C3D40 /* BetaWelcomeView.swift */,
 				A1B2C3D06 /* Assets.xcassets */,
 				A1B2C3G03 /* Preview Content */,
 			);
@@ -195,6 +201,8 @@
 				A1B2C3D29 /* ActivityModels.swift in Sources */,
 				A1B2C3D31 /* ActivityTrackingView.swift in Sources */,
 				A1B2C3D33 /* SummaryView.swift in Sources */,
+				A1B2C3D37 /* FeedbackView.swift in Sources */,
+				A1B2C3D39 /* BetaWelcomeView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -344,7 +352,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0;
+				MARKETING_VERSION = "1.0.0-beta.1";
 				PRODUCT_BUNDLE_IDENTIFIER = com.richmarinai.Resonance;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
@@ -375,7 +383,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0;
+				MARKETING_VERSION = "1.0.0-beta.1";
 				PRODUCT_BUNDLE_IDENTIFIER = com.richmarinai.Resonance;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
