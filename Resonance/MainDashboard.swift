@@ -169,92 +169,276 @@ struct TodaySummaryCard: View {
     }
     
     var body: some View {
-        VStack(spacing: 16) {
+        VStack(spacing: 20) {
+            // Header with gradient background
             HStack {
-                Text("Today's Summary")
-                    .font(.headline)
+                VStack(alignment: .leading, spacing: 4) {
+                    Text("Today's Summary")
+                        .font(.title3)
+                        .fontWeight(.bold)
+                    Text(Date().formatted(date: .abbreviated, time: .omitted))
+                        .font(.caption)
+                        .foregroundColor(.secondary)
+                }
                 Spacer()
                 Button(action: { showingSummaryView = true }) {
-                    Text("See All")
-                        .font(.caption)
-                        .foregroundColor(.blue)
+                    HStack(spacing: 4) {
+                        Text("See All")
+                            .font(.subheadline)
+                        Image(systemName: "chevron.right")
+                            .font(.caption)
+                    }
+                    .foregroundColor(.white)
+                    .padding(.horizontal, 12)
+                    .padding(.vertical, 6)
+                    .background(
+                        LinearGradient(colors: [.blue, .blue.opacity(0.8)], 
+                                     startPoint: .leading, 
+                                     endPoint: .trailing)
+                    )
+                    .cornerRadius(15)
                 }
             }
             
-            LazyVGrid(columns: [GridItem(.flexible()), GridItem(.flexible())], spacing: 12) {
-                SummaryItem(
-                    icon: "heart.fill",
-                    value: "\(Int(healthKit.currentHeartRate))",
-                    label: "Heart Rate",
-                    color: .red
+            // Primary Metrics Row - Stress & Energy (larger display)
+            HStack(spacing: 16) {
+                PrimaryMetricCard(
+                    title: "Stress Level",
+                    value: Int(healthKit.stressLevel),
+                    maxValue: 100,
+                    icon: "brain.head.profile",
+                    gradient: stressGradient(for: healthKit.stressLevel),
+                    status: stressStatus(for: healthKit.stressLevel)
                 )
                 
-                SummaryItem(
-                    icon: "figure.walk",
-                    value: "\(healthKit.todaysSteps)",
-                    label: "Steps",
-                    color: .green
+                PrimaryMetricCard(
+                    title: "Energy Level",
+                    value: Int(healthKit.energyLevel),
+                    maxValue: 100,
+                    icon: "battery.100.bolt",
+                    gradient: energyGradient(for: healthKit.energyLevel),
+                    status: energyStatus(for: healthKit.energyLevel)
                 )
-                
-                if let mood = todaysMood {
-                    SummaryItem(
+            }
+            
+            // Secondary Metrics Grid (3x3 for other 7 metrics)
+            VStack(spacing: 12) {
+                // Row 1
+                HStack(spacing: 12) {
+                    CompactMetricCard(
                         icon: "face.smiling",
-                        value: String(format: "%.1f", mood),
-                        label: "Avg Mood",
-                        color: Color(hue: 0.3 * (mood / 10.0), saturation: 0.5, brightness: 0.9)
+                        value: todaysMood != nil ? String(format: "%.1f", todaysMood!) : "--",
+                        label: "Mood",
+                        color: todaysMood != nil ? Color(hue: 0.3 * (todaysMood! / 10.0), saturation: 0.5, brightness: 0.9) : .gray
                     )
-                } else {
-                    SummaryItem(
-                        icon: "face.smiling",
-                        value: "--",
-                        label: "Avg Mood",
-                        color: .gray
+                    CompactMetricCard(
+                        icon: "moon.fill",
+                        value: String(format: "%.1f", healthKit.sleepHours),
+                        label: "Sleep (h)",
+                        color: .purple
+                    )
+                    CompactMetricCard(
+                        icon: "figure.walk",
+                        value: formatSteps(healthKit.todaysSteps),
+                        label: "Steps",
+                        color: .green
                     )
                 }
                 
-                SummaryItem(
-                    icon: "moon.fill",
-                    value: String(format: "%.1fh", healthKit.sleepHours),
-                    label: "Sleep",
-                    color: .purple
-                )
+                // Row 2
+                HStack(spacing: 12) {
+                    CompactMetricCard(
+                        icon: "heart.fill",
+                        value: healthKit.currentHeartRate > 0 ? "\(Int(healthKit.currentHeartRate))" : "--",
+                        label: "HR",
+                        color: .red
+                    )
+                    CompactMetricCard(
+                        icon: "waveform.path.ecg",
+                        value: healthKit.latestHRV > 0 ? "\(Int(healthKit.latestHRV))" : "--",
+                        label: "HRV",
+                        color: .orange
+                    )
+                    CompactMetricCard(
+                        icon: "heart.text.square",
+                        value: healthKit.restingHeartRate > 0 ? "\(Int(healthKit.restingHeartRate))" : "--",
+                        label: "RHR",
+                        color: .pink
+                    )
+                }
+                
+                // Row 3
+                HStack(spacing: 12) {
+                    CompactMetricCard(
+                        icon: "wind",
+                        value: healthKit.respiratoryRate > 0 ? "\(Int(healthKit.respiratoryRate))" : "--",
+                        label: "Resp",
+                        color: .cyan
+                    )
+                    CompactMetricCard(
+                        icon: "flame.fill",
+                        value: "\(healthKit.activeCalories)",
+                        label: "Calories",
+                        color: .orange
+                    )
+                    CompactMetricCard(
+                        icon: "figure.run",
+                        value: "\(healthKit.workoutMinutes)",
+                        label: "Active Min",
+                        color: .green
+                    )
+                }
             }
         }
         .padding()
         .background(
+            RoundedRectangle(cornerRadius: 20)
+                .fill(
+                    LinearGradient(
+                        colors: [Color(.systemBackground), Color(.systemGray6).opacity(0.3)],
+                        startPoint: .top,
+                        endPoint: .bottom
+                    )
+                )
+                .shadow(color: .black.opacity(0.08), radius: 12, y: 6)
+        )
+    }
+    
+    private func formatSteps(_ steps: Int) -> String {
+        if steps >= 10000 {
+            return String(format: "%.1fk", Double(steps) / 1000)
+        } else if steps >= 1000 {
+            return String(format: "%.1fk", Double(steps) / 1000)
+        } else {
+            return "\(steps)"
+        }
+    }
+    
+    private func stressGradient(for value: Double) -> LinearGradient {
+        if value < 30 {
+            return LinearGradient(colors: [.green, .green.opacity(0.7)], startPoint: .topLeading, endPoint: .bottomTrailing)
+        } else if value < 60 {
+            return LinearGradient(colors: [.yellow, .orange], startPoint: .topLeading, endPoint: .bottomTrailing)
+        } else {
+            return LinearGradient(colors: [.orange, .red], startPoint: .topLeading, endPoint: .bottomTrailing)
+        }
+    }
+    
+    private func energyGradient(for value: Double) -> LinearGradient {
+        if value >= 70 {
+            return LinearGradient(colors: [.green, .mint], startPoint: .topLeading, endPoint: .bottomTrailing)
+        } else if value >= 40 {
+            return LinearGradient(colors: [.blue, .cyan], startPoint: .topLeading, endPoint: .bottomTrailing)
+        } else {
+            return LinearGradient(colors: [.gray, .gray.opacity(0.7)], startPoint: .topLeading, endPoint: .bottomTrailing)
+        }
+    }
+    
+    private func stressStatus(for value: Double) -> String {
+        if value < 30 { return "Low" }
+        else if value < 60 { return "Moderate" }
+        else { return "High" }
+    }
+    
+    private func energyStatus(for value: Double) -> String {
+        if value >= 70 { return "Great" }
+        else if value >= 40 { return "Good" }
+        else { return "Low" }
+    }
+}
+
+// Primary metric cards for Stress and Energy
+struct PrimaryMetricCard: View {
+    let title: String
+    let value: Int
+    let maxValue: Int
+    let icon: String
+    let gradient: LinearGradient
+    let status: String
+    
+    var body: some View {
+        VStack(alignment: .leading, spacing: 12) {
+            HStack {
+                Image(systemName: icon)
+                    .font(.title3)
+                    .foregroundStyle(gradient)
+                Spacer()
+                Text(status)
+                    .font(.caption)
+                    .fontWeight(.medium)
+                    .foregroundColor(.white)
+                    .padding(.horizontal, 8)
+                    .padding(.vertical, 4)
+                    .background(gradient)
+                    .cornerRadius(8)
+            }
+            
+            VStack(alignment: .leading, spacing: 4) {
+                Text(title)
+                    .font(.caption)
+                    .foregroundColor(.secondary)
+                
+                HStack(alignment: .bottom, spacing: 4) {
+                    Text("\(value)")
+                        .font(.system(size: 32, weight: .bold, design: .rounded))
+                    Text("/\(maxValue)")
+                        .font(.caption)
+                        .foregroundColor(.secondary)
+                        .padding(.bottom, 6)
+                }
+            }
+            
+            // Progress bar
+            GeometryReader { geometry in
+                ZStack(alignment: .leading) {
+                    RoundedRectangle(cornerRadius: 4)
+                        .fill(Color(.systemGray5))
+                        .frame(height: 6)
+                    
+                    RoundedRectangle(cornerRadius: 4)
+                        .fill(gradient)
+                        .frame(width: geometry.size.width * CGFloat(value) / CGFloat(maxValue), height: 6)
+                }
+            }
+            .frame(height: 6)
+        }
+        .padding()
+        .frame(maxWidth: .infinity)
+        .background(
             RoundedRectangle(cornerRadius: 16)
-                .fill(Color(.systemBackground))
-                .shadow(color: .black.opacity(0.05), radius: 8, y: 4)
+                .fill(Color(.systemGray6).opacity(0.5))
         )
     }
 }
 
-struct SummaryItem: View {
+// Compact metric cards for secondary metrics
+struct CompactMetricCard: View {
     let icon: String
     let value: String
     let label: String
     let color: Color
     
     var body: some View {
-        VStack(alignment: .leading, spacing: 8) {
-            HStack {
-                Image(systemName: icon)
-                    .font(.caption)
-                    .foregroundColor(color)
-                Spacer()
-            }
+        VStack(spacing: 6) {
+            Image(systemName: icon)
+                .font(.system(size: 18))
+                .foregroundColor(color)
             
             Text(value)
-                .font(.title3)
-                .fontWeight(.semibold)
+                .font(.system(size: 16, weight: .semibold, design: .rounded))
+                .lineLimit(1)
             
             Text(label)
-                .font(.caption2)
+                .font(.system(size: 9))
                 .foregroundColor(.secondary)
+                .lineLimit(1)
         }
-        .padding(12)
-        .background(Color(.systemGray6))
-        .cornerRadius(12)
+        .frame(maxWidth: .infinity)
+        .padding(.vertical, 10)
+        .background(
+            RoundedRectangle(cornerRadius: 12)
+                .fill(Color(.systemGray6).opacity(0.6))
+        )
     }
 }
 

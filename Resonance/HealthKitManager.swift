@@ -30,6 +30,21 @@ class HealthKitManager: ObservableObject {
     @Published var activeCalories: Int = 0
     @Published var restingHeartRate: Double = 0
     @Published var workoutMinutes: Int = 0
+    @Published var respiratoryRate: Double = 0
+    @Published var stressLevel: Double = 50.0
+    @Published var energyLevel: Double = 50.0
+    
+    // Baseline values (calculated from 7-day averages)
+    private var hrvBaseline: Double = 50.0
+    private var rhrBaseline: Double = 60.0
+    private var sleepTarget: Double = 8.0
+    private var activityBaseline: Double = 30.0
+    
+    // Historical data for calculations
+    private var weeklyHRV: [Double] = []
+    private var weeklyRHR: [Double] = []
+    private var weeklySleep: [Double] = []
+    private var weeklyActivity: [Double] = []
     
     // Health data types we want to read
     private var readTypes: Set<HKObjectType> {
@@ -87,6 +102,10 @@ class HealthKitManager: ObservableObject {
         fetchActiveCalories()
         fetchRestingHeartRate()
         fetchWorkoutMinutes()
+        fetchRespiratoryRate()
+        
+        // Update baselines and calculate stress/energy
+        updateBaselines()
         
         // Also start observing for real-time updates
         startObservingHealthData()
@@ -264,6 +283,32 @@ class HealthKitManager: ObservableObject {
             
             DispatchQueue.main.async {
                 self.workoutMinutes = Int(sum.doubleValue(for: HKUnit.minute()))
+            }
+        }
+        
+        healthStore.execute(query)
+    }
+    
+    // MARK: - Respiratory Rate
+    func fetchRespiratoryRate() {
+        let respiratoryType = HKQuantityType.quantityType(forIdentifier: .respiratoryRate)!
+        let sortDescriptor = NSSortDescriptor(key: HKSampleSortIdentifierStartDate, ascending: false)
+        
+        // Get most recent respiratory rate from last 24 hours
+        let endDate = Date()
+        let startDate = Date(timeIntervalSinceNow: -86400) // 24 hours ago
+        let predicate = HKQuery.predicateForSamples(withStart: startDate, end: endDate, options: .strictEndDate)
+        
+        let query = HKSampleQuery(sampleType: respiratoryType, predicate: predicate, limit: 1, sortDescriptors: [sortDescriptor]) { _, samples, error in
+            guard let sample = samples?.first as? HKQuantitySample else {
+                print("No respiratory rate data available")
+                return
+            }
+            
+            DispatchQueue.main.async {
+                let breathsPerMinute = HKUnit.count().unitDivided(by: HKUnit.minute())
+                self.respiratoryRate = sample.quantity.doubleValue(for: breathsPerMinute)
+                print("✅ RESPIRATORY RATE: \(self.respiratoryRate) breaths/min")
             }
         }
         
@@ -473,6 +518,146 @@ class HealthKitManager: ObservableObject {
         }
         
         healthStore.execute(query)
+    }
+    
+    // MARK: - Stress and Energy Calculations
+    
+    private func zScore(_ value: Double, mean: Double, stdDev: Double) -> Double {
+        guard stdDev > 0 else { return 0 }
+        return (value - mean) / stdDev
+    }
+    
+    private func clamp(_ value: Double, min: Double, max: Double) -> Double {
+        return Swift.min(Swift.max(value, min), max)
+    }
+    
+    func updateBaselines() {
+        // Fetch last 7 days of data for baselines
+        let calendar = Calendar.current
+        let endDate = Date()
+        let startDate = calendar.date(byAdding: .day, value: -7, to: endDate)!
+        
+        fetchHistoricalDataForBaselines(from: startDate, to: endDate)
+    }
+    
+    private func fetchHistoricalDataForBaselines(from startDate: Date, to endDate: Date) {
+        // Fetch HRV baseline
+        fetchAverageHRV(from: startDate, to: endDate) { [weak self] avgHRV in
+            self?.hrvBaseline = avgHRV > 0 ? avgHRV : 50.0
+            self?.calculateStressAndEnergy()
+        }
+        
+        // Fetch RHR baseline
+        fetchAverageRHR(from: startDate, to: endDate) { [weak self] avgRHR in
+            self?.rhrBaseline = avgRHR > 0 ? avgRHR : 60.0
+            self?.calculateStressAndEnergy()
+        }
+        
+        // Fetch activity baseline
+        fetchAverageActivity(from: startDate, to: endDate) { [weak self] avgActivity in
+            self?.activityBaseline = avgActivity > 0 ? avgActivity : 30.0
+            self?.calculateStressAndEnergy()
+        }
+    }
+    
+    private func fetchAverageHRV(from startDate: Date, to endDate: Date, completion: @escaping (Double) -> Void) {
+        let hrvType = HKQuantityType.quantityType(forIdentifier: .heartRateVariabilitySDNN)!
+        let predicate = HKQuery.predicateForSamples(withStart: startDate, end: endDate, options: .strictStartDate)
+        
+        // Fetch all HRV samples and calculate average manually
+        let query = HKSampleQuery(sampleType: hrvType, predicate: predicate, limit: HKObjectQueryNoLimit, sortDescriptors: nil) { _, samples, _ in
+            guard let samples = samples as? [HKQuantitySample], !samples.isEmpty else {
+                completion(50.0) // Default baseline
+                return
+            }
+            
+            let sum = samples.reduce(0) { $0 + $1.quantity.doubleValue(for: HKUnit.secondUnit(with: .milli)) }
+            let avg = sum / Double(samples.count)
+            completion(avg)
+        }
+        healthStore.execute(query)
+    }
+    
+    private func fetchAverageRHR(from startDate: Date, to endDate: Date, completion: @escaping (Double) -> Void) {
+        let rhrType = HKQuantityType.quantityType(forIdentifier: .restingHeartRate)!
+        let predicate = HKQuery.predicateForSamples(withStart: startDate, end: endDate, options: .strictStartDate)
+        
+        // Fetch all RHR samples and calculate average manually
+        let query = HKSampleQuery(sampleType: rhrType, predicate: predicate, limit: HKObjectQueryNoLimit, sortDescriptors: nil) { _, samples, _ in
+            guard let samples = samples as? [HKQuantitySample], !samples.isEmpty else {
+                completion(60.0) // Default baseline
+                return
+            }
+            
+            let sum = samples.reduce(0) { $0 + $1.quantity.doubleValue(for: HKUnit.count().unitDivided(by: .minute())) }
+            let avg = sum / Double(samples.count)
+            completion(avg)
+        }
+        healthStore.execute(query)
+    }
+    
+    private func fetchAverageActivity(from startDate: Date, to endDate: Date, completion: @escaping (Double) -> Void) {
+        let exerciseType = HKQuantityType.quantityType(forIdentifier: .appleExerciseTime)!
+        let predicate = HKQuery.predicateForSamples(withStart: startDate, end: endDate, options: .strictStartDate)
+        
+        // Use cumulative sum for exercise time, then divide by days
+        let query = HKStatisticsQuery(quantityType: exerciseType, quantitySamplePredicate: predicate, options: .cumulativeSum) { _, result, _ in
+            guard let sum = result?.sumQuantity() else {
+                completion(30.0) // Default baseline
+                return
+            }
+            
+            let totalMinutes = sum.doubleValue(for: .minute())
+            let days = 7.0 // We're fetching 7 days of data
+            let avgPerDay = totalMinutes / days
+            completion(avgPerDay)
+        }
+        healthStore.execute(query)
+    }
+    
+    func calculateStressAndEnergy() {
+        // Stress calculation weights
+        let w1: Double = 0.35  // HRV (negative correlation)
+        let w2: Double = 0.25  // RHR
+        let w3: Double = 0.25  // Sleep debt
+        let w4: Double = 0.15  // Activity load
+        
+        // Calculate z-scores for stress
+        let hrvZScore = -zScore(latestHRV, mean: hrvBaseline, stdDev: hrvBaseline * 0.2)
+        let rhrZScore = zScore(restingHeartRate, mean: rhrBaseline, stdDev: rhrBaseline * 0.1)
+        let sleepDebtHours = max(0, sleepTarget - sleepHours)
+        let sleepDebtZScore = zScore(sleepDebtHours, mean: 0, stdDev: 2)
+        let activityZScore = zScore(Double(workoutMinutes), mean: activityBaseline, stdDev: activityBaseline * 0.3)
+        
+        // Calculate raw stress
+        let stressRaw = w1 * hrvZScore + w2 * rhrZScore + w3 * sleepDebtZScore + w4 * activityZScore
+        
+        // Calculate final stress level (0-100)
+        DispatchQueue.main.async {
+            self.stressLevel = self.clamp(50 + 12 * stressRaw, min: 0, max: 100)
+        }
+        
+        // Energy calculation weights
+        let a1: Double = 0.3   // HRV
+        let a2: Double = 0.25  // RHR (negative correlation)
+        let a3: Double = 0.25  // Sleep vs target
+        let a4: Double = 0.1   // Sleep consistency (simplified)
+        let a5: Double = 0.1   // Acute vs chronic load (simplified)
+        
+        // Calculate z-scores for energy
+        let energyHRVZScore = zScore(latestHRV, mean: hrvBaseline, stdDev: hrvBaseline * 0.2)
+        let energyRHRZScore = -zScore(restingHeartRate, mean: rhrBaseline, stdDev: rhrBaseline * 0.1)
+        let sleepZScore = zScore(sleepHours, mean: sleepTarget, stdDev: 1.5)
+        let sleepConsistencyZScore = 0.0 // Simplified for now
+        let loadBalanceZScore = -abs(activityZScore) * 0.5 // Simplified acute/chronic load
+        
+        // Calculate raw energy
+        let energyRaw = a1 * energyHRVZScore + a2 * energyRHRZScore + a3 * sleepZScore + a4 * sleepConsistencyZScore + a5 * loadBalanceZScore
+        
+        // Calculate final energy level (0-100)
+        DispatchQueue.main.async {
+            self.energyLevel = self.clamp(50 + 12 * energyRaw, min: 0, max: 100)
+        }
     }
 }
 
