@@ -1,0 +1,411 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 56;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		A1B2C3D01 /* ResonanceApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1B2C3D02 /* ResonanceApp.swift */; };
+		A1B2C3D03 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1B2C3D04 /* ContentView.swift */; };
+		A1B2C3D05 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A1B2C3D06 /* Assets.xcassets */; };
+		A1B2C3D07 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A1B2C3D08 /* Preview Assets.xcassets */; };
+		A1B2C3D09 /* SplashView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1B2C3D10 /* SplashView.swift */; };
+		A1B2C3D11 /* DashboardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1B2C3D12 /* DashboardView.swift */; };
+		A1B2C3D13 /* Models.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1B2C3D14 /* Models.swift */; };
+		A1B2C3D15 /* HealthKitManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1B2C3D16 /* HealthKitManager.swift */; };
+		A1B2C3D17 /* MoodModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1B2C3D18 /* MoodModels.swift */; };
+		A1B2C3D19 /* QuickMoodCheckInView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1B2C3D20 /* QuickMoodCheckInView.swift */; };
+		A1B2C3D21 /* ProgressDashboardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1B2C3D22 /* ProgressDashboardView.swift */; };
+		A1B2C3D23 /* CrisisSupportView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1B2C3D24 /* CrisisSupportView.swift */; };
+		A1B2C3D25 /* DailyWisdomView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1B2C3D26 /* DailyWisdomView.swift */; };
+		A1B2C3D27 /* MainDashboard.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1B2C3D28 /* MainDashboard.swift */; };
+		A1B2C3D29 /* ActivityModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1B2C3D30 /* ActivityModels.swift */; };
+		A1B2C3D31 /* ActivityTrackingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1B2C3D32 /* ActivityTrackingView.swift */; };
+		A1B2C3D33 /* SummaryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1B2C3D34 /* SummaryView.swift */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		A1B2C3D00 /* Resonance.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Resonance.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		A1B2C3D02 /* ResonanceApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResonanceApp.swift; sourceTree = "<group>"; };
+		A1B2C3D04 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
+		A1B2C3D06 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		A1B2C3D08 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
+		A1B2C3D10 /* SplashView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashView.swift; sourceTree = "<group>"; };
+		A1B2C3D12 /* DashboardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DashboardView.swift; sourceTree = "<group>"; };
+		A1B2C3D14 /* Models.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Models.swift; sourceTree = "<group>"; };
+		A1B2C3D16 /* HealthKitManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HealthKitManager.swift; sourceTree = "<group>"; };
+		A1B2C3D18 /* MoodModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoodModels.swift; sourceTree = "<group>"; };
+		A1B2C3D20 /* QuickMoodCheckInView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuickMoodCheckInView.swift; sourceTree = "<group>"; };
+		A1B2C3D22 /* ProgressDashboardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProgressDashboardView.swift; sourceTree = "<group>"; };
+		A1B2C3D24 /* CrisisSupportView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CrisisSupportView.swift; sourceTree = "<group>"; };
+		A1B2C3D26 /* DailyWisdomView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DailyWisdomView.swift; sourceTree = "<group>"; };
+		A1B2C3D28 /* MainDashboard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainDashboard.swift; sourceTree = "<group>"; };
+		A1B2C3D30 /* ActivityModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityModels.swift; sourceTree = "<group>"; };
+		A1B2C3D32 /* ActivityTrackingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityTrackingView.swift; sourceTree = "<group>"; };
+		A1B2C3D34 /* SummaryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SummaryView.swift; sourceTree = "<group>"; };
+		A1B2C3D35 /* Resonance.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Resonance.entitlements; sourceTree = "<group>"; };
+		A1B2C3D36 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		A1B2C3F00 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		A1B2C3G00 = {
+			isa = PBXGroup;
+			children = (
+				A1B2C3G02 /* Resonance */,
+				A1B2C3G01 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		A1B2C3G01 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				A1B2C3D00 /* Resonance.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		A1B2C3G02 /* Resonance */ = {
+			isa = PBXGroup;
+			children = (
+				A1B2C3D35 /* Resonance.entitlements */,
+				A1B2C3D36 /* Info.plist */,
+				A1B2C3D02 /* ResonanceApp.swift */,
+				A1B2C3D04 /* ContentView.swift */,
+				A1B2C3D10 /* SplashView.swift */,
+				A1B2C3D12 /* DashboardView.swift */,
+				A1B2C3D14 /* Models.swift */,
+				A1B2C3D16 /* HealthKitManager.swift */,
+				A1B2C3D18 /* MoodModels.swift */,
+				A1B2C3D20 /* QuickMoodCheckInView.swift */,
+				A1B2C3D22 /* ProgressDashboardView.swift */,
+				A1B2C3D24 /* CrisisSupportView.swift */,
+				A1B2C3D26 /* DailyWisdomView.swift */,
+				A1B2C3D28 /* MainDashboard.swift */,
+				A1B2C3D30 /* ActivityModels.swift */,
+				A1B2C3D32 /* ActivityTrackingView.swift */,
+				A1B2C3D34 /* SummaryView.swift */,
+				A1B2C3D06 /* Assets.xcassets */,
+				A1B2C3G03 /* Preview Content */,
+			);
+			path = Resonance;
+			sourceTree = "<group>";
+		};
+		A1B2C3G03 /* Preview Content */ = {
+			isa = PBXGroup;
+			children = (
+				A1B2C3D08 /* Preview Assets.xcassets */,
+			);
+			path = "Preview Content";
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		A1B2C3T00 /* Resonance */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = A1B2C3B00 /* Build configuration list for PBXNativeTarget "Resonance" */;
+			buildPhases = (
+				A1B2C3P00 /* Sources */,
+				A1B2C3F00 /* Frameworks */,
+				A1B2C3R00 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = Resonance;
+			productName = Resonance;
+			productReference = A1B2C3D00 /* Resonance.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		A1B2C3PR0 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = 1;
+				LastSwiftUpdateCheck = 1540;
+				LastUpgradeCheck = 1640;
+				TargetAttributes = {
+					A1B2C3T00 = {
+						CreatedOnToolsVersion = 15.4.0;
+					};
+				};
+			};
+			buildConfigurationList = A1B2C3B01 /* Build configuration list for PBXProject "Resonance" */;
+			compatibilityVersion = "Xcode 14.0";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = A1B2C3G00;
+			productRefGroup = A1B2C3G01 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				A1B2C3T00 /* Resonance */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		A1B2C3R00 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A1B2C3D07 /* Preview Assets.xcassets in Resources */,
+				A1B2C3D05 /* Assets.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		A1B2C3P00 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A1B2C3D03 /* ContentView.swift in Sources */,
+				A1B2C3D01 /* ResonanceApp.swift in Sources */,
+				A1B2C3D09 /* SplashView.swift in Sources */,
+				A1B2C3D11 /* DashboardView.swift in Sources */,
+				A1B2C3D13 /* Models.swift in Sources */,
+				A1B2C3D15 /* HealthKitManager.swift in Sources */,
+				A1B2C3D17 /* MoodModels.swift in Sources */,
+				A1B2C3D19 /* QuickMoodCheckInView.swift in Sources */,
+				A1B2C3D21 /* ProgressDashboardView.swift in Sources */,
+				A1B2C3D23 /* CrisisSupportView.swift in Sources */,
+				A1B2C3D25 /* DailyWisdomView.swift in Sources */,
+				A1B2C3D27 /* MainDashboard.swift in Sources */,
+				A1B2C3D29 /* ActivityModels.swift in Sources */,
+				A1B2C3D31 /* ActivityTrackingView.swift in Sources */,
+				A1B2C3D33 /* SummaryView.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin XCBuildConfiguration section */
+		A1B2C3C00 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEVELOPMENT_TEAM = QDD5ZFGK2T;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited)";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		A1B2C3C01 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEVELOPMENT_TEAM = QDD5ZFGK2T;
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		A1B2C3C02 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = Resonance/Resonance.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_ASSET_PATHS = "\"Resonance/Preview Content\"";
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = Resonance/Info.plist;
+				INFOPLIST_KEY_NSHealthShareUsageDescription = "Resonance uses health data to provide personalized wellness insights and track your activities.";
+				INFOPLIST_KEY_NSHealthUpdateUsageDescription = "Resonance records your wellness activities and mood data to help track your progress.";
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.richmarinai.Resonance;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		A1B2C3C03 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = Resonance/Resonance.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_ASSET_PATHS = "\"Resonance/Preview Content\"";
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = Resonance/Info.plist;
+				INFOPLIST_KEY_NSHealthShareUsageDescription = "Resonance uses health data to provide personalized wellness insights and track your activities.";
+				INFOPLIST_KEY_NSHealthUpdateUsageDescription = "Resonance records your wellness activities and mood data to help track your progress.";
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.richmarinai.Resonance;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		A1B2C3B00 /* Build configuration list for PBXNativeTarget "Resonance" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				A1B2C3C02 /* Debug */,
+				A1B2C3C03 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		A1B2C3B01 /* Build configuration list for PBXProject "Resonance" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				A1B2C3C00 /* Debug */,
+				A1B2C3C01 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = A1B2C3PR0 /* Project object */;
+}
